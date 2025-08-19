@@ -17,14 +17,15 @@ public class SimpleRandomWalkDungeonGenerator : MonoBehaviour
     [SerializeField]
     public bool startRandomlyEachIteration = true;
 
+    [SerializeField]
+    private TilemapVisualizer tilemapVisualizer;
+
     public void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk();
 
-        foreach (var pos in floorPositions)
-        {
-            Debug.Log(pos);
-        }
+        tilemapVisualizer.Clear();
+        tilemapVisualizer.PaintFloorTiles(floorPositions);
     }
 
     protected HashSet<Vector2Int> RunRandomWalk()
@@ -32,6 +33,7 @@ public class SimpleRandomWalkDungeonGenerator : MonoBehaviour
         var currentPosition = startPosition;
         HashSet<Vector2Int> floorPositions = new HashSet<Vector2Int>();
 
+        // genera la lista de direcciones en las que se arma el camino
         for (int i = 0; i < iterations; i++)
         {
             var path = ProceduralGenerationAlgorithm.SimpleRandomWalk(currentPosition, walkLength);
