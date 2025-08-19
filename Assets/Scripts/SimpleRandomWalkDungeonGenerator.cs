@@ -17,14 +17,15 @@ public class SimpleRandomWalkDungeonGenerator : MonoBehaviour
     [SerializeField]
     public bool startRandomlyEachIteration = true;
 
+    [SerializeField]
+    private TilemapVisualizer1 tilemapVisualizer;
+    
+    
     public void RunProceduralGeneration()
     {
         HashSet<Vector2Int> floorPositions = RunRandomWalk();
-
-        foreach (var pos in floorPositions)
-        {
-            Debug.Log(pos);
-        }
+        tilemapVisualizer.Clear();
+        tilemapVisualizer.paintFloorTiles(floorPositions);
     }
 
     protected HashSet<Vector2Int> RunRandomWalk()
